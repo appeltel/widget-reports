@@ -38,7 +38,7 @@ def main():
         logging.basicConfig(level=logging.WARNING)
 
     repo = git.Repo(os.getcwd())
-    repo.pull()
+    repo.remotes.origin.pull()
 
     generate_report(opts.output)
     commit_report(opts.output, repo)
@@ -90,9 +90,9 @@ def commit_report(filename, repo):
         date=datetime.datetime.now(),
         filename=filename
     )   
-    repo.index.add(filename)
+    repo.index.add([filename])
     repo.index.commit(commit_message)
-    repo.remotes.origin.push(repo.head)
+    repo.remotes.origin.push()
 
 
 if __name__ == '__main__':
